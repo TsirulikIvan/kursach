@@ -1,15 +1,41 @@
 import sys
-from PyQt5.QtWidgets import QApplication, QWidget
+from PyQt5.QtWidgets import(QWidget, QToolTip,
+    QPushButton, QApplication)
+from PyQt5.QtGui import QIcon
 
 
-if __name__ == '__main__':
+class App(QWidget):
+    '''
+    Кастомный класс приложения
+    '''
+    def __init__(self, wd, hg):
+        '''
+        Конструктор приложения
+        '''
+        super().__init__()
+        self.width  = wd
+        self.height = hg
+        self.initUI()
 
-    app = QApplication(sys.argv)
+    def initUI(self):
+        '''
+        Инициализирование объектов(юнитов) интерфейса
+        '''
+        self.setGeometry(300, 150, self.width, self.height)
+        self.setWindowTitle('Осциллятор')
+        self.setWindowIcon(QIcon('icon.png'))
+        btn1 = self.createbutton()
+        self.show()
 
-    w = QWidget()
-    w.resize(1600, 900)
-    w.move(0, 0)
-    w.setWindowTitle('Гармонический осциллятор')
-    w.show()
+    def createbutton(self, name='Кнопка', x=100, y=50):
+        '''
+        Создает новую кнопку
+        '''
+        btn = QPushButton(name, self)
+        btn.resize(btn.sizeHint())
+        btn.move(x, y)
+        return btn
 
-    sys.exit(app.exec_())
+app = QApplication(sys.argv)
+ex = App(960, 540)
+sys.exit(app.exec_())
